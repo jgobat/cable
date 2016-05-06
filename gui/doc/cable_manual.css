@@ -1,0 +1,25 @@
+
+div.caption {
+    background-color: #bbbbbb;
+    font-family: Helvetica;
+    font-size: 0.8em;
+    border-top-color: #bbbbbb;
+    border-bottom-color: #bbbbbb;
+    border-top-width: 6px;
+    border-bottom-width: 6px;
+    border-top-style: solid;
+    border-bottom-style: solid;
+}
+
+div.figure {
+    background-color: #bbbbbb;
+    border-top-color: #bbbbbb;
+    border-top-width: 6px;
+    border-top-style: solid;
+}
+
+div.figure img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -1,0 +1,356 @@
+<html>
+
+<link rel="StyleSheet" href="cable_manual.css" type="text/css" media="screen">
+
+<body style="width: 1024px" bgcolor="#dddddd">
+
+<center>
+<h1>Getting Started with WHOI Cable v3</h1>
+</center>
+
+<p>
+This document describes version 3 of WHOI Cable, a program for 
+static and dynamic modeling of oceanographic cable systems such as moorings
+and towed bodies. Version 3 represents a complete redesign of the user 
+interface. This short, illustrated document describes the features of that 
+interface.  The underlying numerical engine and model approach has not changed 
+significantly from version 2. For more information on those aspects of the
+program please refer to the manuals for 
+<a href="WHOI_Cable_manual-2.0.pdf">version 2</a> (WHOI Technical Report 
+2000-08) and <a href="WHOI_Cable_manual-1.0.pdf">version 1</a>
+(WHOI Technical Report 97-15) and references therein. New users are 
+particularly directed to chapter 6 of the version 2 manual for tips
+on solution techniques. The earlier manuals also contain detailed
+descriptions of the model input parameters. 
+
+<h3>Constructing a model </h3>
+
+Figure 1 shows the main problem view with a simple subsurface problem loaded.
+The pane on the left shows the problem layout including the top and 
+bottom terminations (in this case an anchor at the bottom and a buoy
+at the top) and the segments that connect the the two ends. Each segment
+is assigned a material, length and number of nodes. 
+<div class="figure">
+<img src="mine_loaded_crop.png">
+<div class="caption">
+Figure 1 - Main layout and problem definition view with a simple subsurface 
+mooring problem defined.
+</div>
+</div>
+The pane on the right contains two sections. The top section for model 
+parameters contains the basic problem description (title, problem type), 
+numerical analysis parameters (relaxation factors, convergence tolerances, 
+iteration limits), solution method, and dynamic output setup. The bottom
+environment section describes model forcing including waves and applied 
+current. 
+
+<p>
+Figure 2 shows an annotated view of the main window with a blank problem
+as displayed at program start or when selecting New from the File menu. 
+The basic elements of the problem layout are the top terminal, segments,
+and bottom terminal. For basic mooring problems the only requirements
+for the top and bottom terminals are the selection of terminal type
+and the assignment of the right object. Select the type by clicking
+either the buoy or anchor button. Then select the appropriate buoy or
+anchor using the pulldown menu. The contents of that menu change depending
+on whether an anchor or buoy type terminal is selected.
+<p>
+The construction of the line or cable running between the two terminals
+is defined in the layout section by clicking the arrow buttons
+to add new segments. As segments are added or the length or node count
+for existing segments are changed, the running counts in the DEPTH, ALTIT,
+and NODES columns will update. Depth and altitude values should be
+interpreted with care. They are calculated as simple running totals of the 
+length from the surface down and bottom up, respectively. They do not account 
+for stretch, catenary effects, or the actual geometry the system will assume 
+under the prescribed forcing (that cannot be known until a solution is 
+generated). With a depth defined in the environment section these values
+are most accurate with taut subsurface moorings.
+<p>
+When working with segments the "active" segment is always highlighted
+yellow. Clicking the up arrow will add a new segment above the active
+segment. Down arrow adds a segment below. Cut and copy operations always
+act on the highlighted segment. Pasting a segment from the clipboard
+always paste below the currently active line. Segments can be rearranged 
+by clicking on the segment number at the left of the line and dragging 
+it to a new position in the layout. 
+<p>
+Unlike previous version of WHOI Cable, version 3 does not allow you to
+specify a connector object between segments. You can specify that the 
+connection between two segments is either pinned (moments released)
+or fixed (as if spliced or rigidly joined) using the check boxes in 
+"pin" column of the layout. Checking this box specifies that the connection 
+between the segment on that line and the segment above that line is pinned. 
+If you want to duplicate the behavior of previous versions with connectors
+that have mass and drag between segments then you must convert those
+connector definitions to equivalent or similar material definitions and
+add a segment with that material assigned. 
+<p>
+Materials are assigned to the segments via the pulldown
+menu. The materials available in the pulldowns, as well as the buoy and
+anchors available in the terminal pulldowns are defined on the object tabs
+at the top of the layout window. Clicking the Materials tab switches the 
+view main window to the view of the materials database shown in 
+Figure 3.
+<div class="figure">
+<img src="newproblem_crop_anno.png">
+<div class="caption">
+Figure 2 - Main layout and problem definition view with a new problem.
+</div>
+</div>
+
+<p>
+Within the material database, materials can be added, deleted and modified
+by scrolling through the list on the right. Editing of properties is done
+by clicking on a material in the list and editing values in the entry boxes on
+the right. Click the check mark to accept changes in the form - the new
+values will appear in the listed version. Materials can be renamed by
+clicking and editing them directly in the list. Move materials from one
+category to another by clicking and dragging within the list. 
+<div class="figure">
+<img src="materials_crop_anno.png">
+<div class="caption">
+Figure 3 - Materials tab. Tabs for other object types (buoys, attachments, 
+anchors) are similar.
+</div>
+</div>
+Clicking the save button on a database window will save the current state of
+the database to the global save file. 
+
+<p>
+Once a model layout is constructed and analysis parameters and environmental
+forcing defined, use the pulldown solution type menu (Figure 4) to
+select what static solution method to use and whether to also generate
+dynamic results.
+<div class="figure">
+<img src="mine_dynamic_setup_crop.png">
+<div class="caption">
+Figure 4 - Pulldown menu for selecting static solution method and whether
+to generate static and dynamic results.
+</div>
+</div>
+When generating dynamic results you must have values for the 
+output time-step and/or the snapshot time-step to define how the results
+will be sampled into the output. The output time-step defines the sampling
+rate for time series results at the output nodes (section noted on the
+top right in Figure 2). 
+The snapshot time-step defines the rate at which results over the entire
+model are saved for generating animations/movies. If either of output
+or snapshot time-step is blank or zero then that type of result will not
+be saved. Both time-steps if given must be a multiple of the solution 
+time-step.
+<p>
+Output nodes for dynamic sampling are defined using either the list under
+the "nodes" header or by checking the shortcut boxes to the right of the list. 
+To add an arbitrary node to the list click on the + button and then click on
+the value in the list to edit the number. Node numbers can be deleted by
+highlighting them and clicking -. The check boxes on the right are a quick
+way to specify that the
+
+<h3>Solving a model and viewing results</h3>
+
+With the model constructed and the solution type defined, select
+Solve from the Model menu to view the output control dialog box
+(Figure 5). 
+<div class="figure">
+<img src="output_options_crop.png">
+<div class="caption">
+Figure 5 - Output options dialog shown when solving a model or loading 
+results from a file.
+</div>
+</div>
+Clicking OK in this dialog will start the solution process (Figure 6).
+This dialog will always appear when solving a model or loading saved
+model results if you check the "always show this dialog..." option. If you
+have unchecked this option then you can view the dialog by selecting
+Results from the Model menu. The settings you apply there will be applied
+to all displayed results until changed. 
+<p>
+<div class="figure">
+<img src="solution_control_crop.png">
+<div class="caption">
+Figure 6 - Solution control dialog displays solution progress, diagnostic
+messages about the state of the solution, and controls for saving the solution
+once complete.
+</div>
+</div>
+The solution control dialog is largely unchanged from previous versions of
+WHOI Cable. While running the dialog will display solution progress. 
+Advanced users can pause the solution and adjust the analysis parameters
+(relaxation factors, tolerances, and iteration limits) while a solution
+is running. When the solution is complete the results can be saved to disk
+by clicking the save button or converted to a Matlab binary .mat file
+by cicking matlab. 
+
+<p>
+If the "tabulated results" option was checked in the output control
+dialog (Figure 5) the first results displayed will be table of static
+values shown in Figure 7. 
+<div class="figure">
+<img src="static_output_table_crop.png">
+<div class="caption">
+Figure 7 - Table of static results. The default view shows the position
+at the top of the segment along with the maximum tension and forces on that 
+segment.  Results for individual nodes can be viewed by clicking the expanders.
+</div>
+</div>
+If safe working load and yield tension values are defined for the segment's
+assigned material then tensions will be compared to those values and 
+safety factors will be displayed in the eight and ninth columns. Tension values
+that exceed 100% will be flagged red. 
+
+<p>
+Static tension and position graphics (Figure 9) will also appear for static 
+solutions when "position snapshots" and/or "tension snapshots" is selected 
+in the output control dialog (Figure 5). This is true even when a dynamic 
+solution is not being generated - the static solution is equivalent to a 
+snapshot at time zero of a dynamic solution.
+
+<p>
+Dynamic results are displayed as graphs of time series values at the 
+selected nodes (Figure 8) or as animations of the snapshotted results 
+(Figure 9). 
+<div class="figure">
+<img src="mine_time_series_crop_anno.png">
+<div class="caption">
+Figure 8 - Time series results graph.
+</div>
+<img src="mine_snapshots_crop.png">
+<div class="caption">
+Figure 9 - Static or dynamic snapshot plot.
+</div>
+</div>
+Zooming on any graph is accomplished by left- or right-clicking in the 
+"hot zones" illustrated in Figure 8. Left-clicking increases the value
+of the axis limit; right-clicking decreases the value. You can also
+right click in the graph area to raise a context menu with a set limits option
+or click on the magnifying glass for the same set limits option. For time
+series graph with multiple lines (for multiple nodes) you can also toggle lines
+on and off via the right-click context menu.
+
+<h3> Loading existing models and viewing saved results </h3>
+
+To load a model from a file, select Open from the File menu. The loaded
+model will replace any existing model that you are working with. If the
+model file contains named objects (materials, attachments, etc.) with names
+that conflict with objects in the database a question dialog will appear
+explaining and presenting options for resolving the conflict (Figure 10). 
+<div class="figure">
+<img src="database_rename_crop.png">
+<div class="caption">
+Figure 10 - Database name conflict resolution dialog.
+</div>
+</div>
+The two basic choices for resolving a conflict are to rename the local
+copy coming from the model file or to use the global definition from
+the database. Renaming the object creates a new entry in the database
+with an "_1" (or "_2" if "_1" already exists, etc.) appended to the name 
+in the "user" category (the user category will be created if it does not 
+already exist).  Using the global definition causes the local copy to 
+be discarded.  With the "Rename all" and "Use global for all" buttons
+you can also specify that all name conflicts in this file should be handled
+in the same way.
+
+<p>
+A new feature in version 3 is the inclusion of a complete model definition
+in every saved results file. This means that when you choose Open results
+from the File menu, you will also load a new model, overwriting any existing
+model. The output options dialog will appear when you load results
+if you have the "always show ..." option checked (Figure 5). A
+simple playback control (Figure 11) will apppear in place of the 
+regular solution control. 
+<div class="figure">
+<img src="playback_control_crop.png">
+<div class="caption">
+Figure 11 - Playback control for results loaded from a file.
+</div>
+</div>
+This window displays the playback time and provides buttons for playing
+and pausing the animation and controlling the playback speed.  Clicking
+the x on the left side of the playback control will close all the windows
+(plots, tables) associated with the results file. 
+
+<h3> Additional model construction notes </h3>
+
+In version 3, current profiles are treated as named objects that are stored
+in their own database much as materials, buoys, etc. To use a current profile
+in your model click on the "current profiles" tab in the environment parameters
+section of the main window (Figure 12). 
+<div class="figure">
+<img src="currentprofiles_crop.png">
+<div class="caption">
+Figure 12 - Main window with the current profiles tab of the environment
+parameters visible. 
+</div>
+</div>
+Existing profiles are shown in the list on the left of the tab. To edit a
+profile select it in the list. Current magnitudes at the defined depths are
+edited by clicking on the data pairs in the table on the right. As on
+the object tabs, click the blank sheet icon to start a new profile, the check 
+mark to accept changes, the trashcan to delete a profile and the disk to 
+save the database of profiles to disk. Depth values can be added or deleted
+from the current profile by clicking the + and - buttons. As soon as you edit
+the value in the depth column the profile will automatically resort itself
+from surface smallest to greatest depth.
+<p>
+To use a current profile, click back to the "basic" environment tab and
+select the profile name from the pulldown menu. Selecting a profile will
+clear any value you have in the constant current entry. Similarly,
+entering any value into the constant current will clear the profile
+selection.
+
+<p>
+Attachments (clamped on instruments typically) are added to segments
+using the "Attach" expander shown on every segment line. Clicking this
+<div class="figure">
+<img src="attachment_step_1_crop.png">
+<div class="caption">
+Figure 13 - Step 1 to adding attachments to a segment is assigning the
+type of attachment.
+</div>
+</div>
+expander exposes the attachments list (Figure 13). Add attachments by clicking
+the Add button. Attachments can be deleted from the list by clicking the
+trash can.  A segment can have an arbitrary number of attachments defined.
+Select the type of each attachment using the pulldown menu.
+<p>
+In addition to the attachment type you must specify the nodes on this
+segment to where the object is attached. Click the Nodes expander 
+to view the list of attachment nodes (Figure 14). You may need to expand
+the left side pane of the main window to keep the entire layout visible 
+in the window by clicking on the line dividing the two sides and dragging
+to the right.
+<div class="figure">
+<img src="attachment_add_nodes_crop.png">
+<div class="caption">
+Figure 14 - Step 2 for attachments is defining the node(s) the attachment is
+connected to. 
+</div>
+</div>
+The node numbers for the attachments are the local number on the segment. Node
+1 on a segment is at the bottom of the segment. The "depth" and "altit"
+values change as the node number changes to reflect the absolute positioning 
+on the layout. A given attachment can be connected at an arbitrary number
+of nodes along a segment. 
+
+<p>
+Some problem types require additional parameters to define the top and
+bottom terminals. To edit these parameters click the "..." button next to
+the terminal label (Figure 15). The most common uses for these parameters 
+is to define ship speed and possibly towbody thrust for towing problems. 
+<div class="figure">
+<img src="towing_crop.png">
+<div class="caption">
+Figure 15 - A towing problem with the additional options for top and
+bottom terminals shown. 
+</div>
+</div>
+For mooring problems, friction-coeff and safety-factor inputs can be
+used to define anchor holding parameters. If these values are specified the
+diagnostic messages in the output window of the solution control
+dialog (Figure 6) will include anchor holding results and recommended
+sizing. 
+
+
+</body>
+</html>

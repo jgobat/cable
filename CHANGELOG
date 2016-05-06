@@ -1,0 +1,77 @@
+v3.12 o fix bug in branched problems with detection of second BC
+      o revert to previous B0=0 boundary BC 
+      o fix bug in current evaluation at wrong coordinates in 3D dynamics
+      o add progress save and restart for dynamic problems (3D only for moment)
+      o make shooting horizontal a one loop operation
+      o fix bug in 3D static coordinate integration across 
+        connectors with spools
+      o fix bug in debug output of connectors with positions or thrust  
+
+v3.11 o fix bug remapping dynamic -> static on dynstat option
+      o fix bug where Sn and Sb were not written as dynamic quantities
+      o added node s coordinate, s, as a variable (can be function of 
+        node number)
+      o added node number, n, as a variable
+      o variable smoothing can now be function of time
+      o re-do new thrust output to be its own thing rather than an add-on
+        to time-series output. Use -ext_dt to specify timestep.
+      o fix a bug with atan2 parsing (it wasn't there). Add acos and asin too
+      o reinstate syntax error output on parse errors
+      o prelim support (not well tested) for xthrust output in result file
+      o -connectors option now includes nodes on both sides of connector
+        in output
+    
+
+v3.10 o rewrote variable expression handling for filtering, node
+        references, many more available variables, general 
+        availability of all variables on layout expressions, etc.
+
+v3.09 o fix bug in 3D Sn/Sb calc from shooting across connectors with 
+        top-spool preceding
+      o add x,y,z,u,v,w to available variables for -thrust
+      o add ability to specify additional connector parameters (position,
+        force, thrust)
+
+            connector = {
+                body = CONNECTOR_NAME
+                x = INITIAL_X_position
+                x-thrust = THRUST_EXPRESSION
+             }
+            
+             old style still allowed:
+
+             connector = CONNECTOR_NAME
+             connector = pinned
+             connector = spliced (same as no connector)
+
+      o lengthened copy buffer for text variable expressions to 64k (from 2k)
+v3.08 o more payout fixes, pay out and in stretched lengths
+      o add seg_dt option and new results format of segment data 
+      o fix some 2D/3D naming problems in res2mat velocities
+v3.07 o fixes bugs in payout and finish support for payout in 3D
+      o add horizontal-drifter problem type
+      o add static-outer-method fixed/variable to adaptively control outer
+            relaxation
+      o add current-file option to specify a 4D grid of current in the form
+        
+            dt min_t nt dz min_z nz dx min_x nx dy min_y ny
+            Ux(1) Uy(1) Uz(1) ... 
+
+            The array is ordered/indexed as U(t,y,x,z) so that the first 
+            entries are the current profile starting at min_z going to max_z 
+            at min_t, min_x, min_y. Then shift over to the profile at 
+            min_x + dx, etc. Then repeat that for all the profile at 
+            min_t, min_y + dy, etc.
+
+v3.06 o adds support for rotating a current profile.
+v3.04 o adds support for scaling an entire current profile 
+      o add static-outer-method option to use secant or bisection in draft outer
+      o new access to advanced analysis parameter control of 
+            dynamic integration method
+            static solution method.
+v3.03 o fixes a bug in the results display for solutions loaded from file,
+            causing forces and tensions to be underreported by 4.448.
+
+o added mu= and safety= to terminal definitions for anchor drag in 
+  static problems
+o added swl= and yield= to material definition for tension checks

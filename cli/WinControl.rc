@@ -1,0 +1,79 @@
+#include "windows.h"
+
+1000 ICON "wcable.ico"
+// 1001 ICON "up.ico"
+// 1002 ICON "down.ico"
+
+10000 DIALOG 6, 18, 250, 182
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
+CAPTION "WHOI Cable"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "",            2000, 5, -2, 235, 75
+    LTEXT           "Relaxation", -1, 45, 5, 50, 8 
+    LTEXT           "Tolerance",  -1, 115, 5, 50, 8 
+    LTEXT           "Iterations", -1, 185, 5, 50, 8 
+    LTEXT           "Static", -1,  10, 18, 30, 8
+    EDITTEXT        100,           45, 16, 50, 12, ES_AUTOHSCROLL
+    LTEXT           "Outer", -1,   10, 38, 30, 8
+    EDITTEXT        101,           45, 36, 50, 12, ES_AUTOHSCROLL
+    LTEXT           "Dynamic", -1, 10, 58, 30, 8
+    EDITTEXT        102,           45, 56, 50, 12, ES_AUTOHSCROLL
+    EDITTEXT        200,	   115, 16, 50, 12, ES_AUTOHSCROLL
+    EDITTEXT        201,	   115, 36, 50, 12, ES_AUTOHSCROLL
+    EDITTEXT        202,	   115, 56, 50, 12, ES_AUTOHSCROLL
+    EDITTEXT        300,	   185, 16, 50, 12, ES_AUTOHSCROLL
+    EDITTEXT        301,	   185, 36, 50, 12, ES_AUTOHSCROLL
+    EDITTEXT        302,	   185, 56, 50, 12, ES_AUTOHSCROLL
+
+    GROUPBOX        "",             2001, 5, 75, 235, 35
+    LTEXT           "time-step", -1, 45, 82, 50, 8 
+    LTEXT           "duration",  -1, 115, 82, 50, 8 
+    LTEXT           "ramp-time", -1, 185, 82, 50, 8 
+    LTEXT           "Dynamic", -1, 10, 95, 30, 8
+    EDITTEXT        400,           45, 93, 50, 12, ES_AUTOHSCROLL
+    EDITTEXT        401,           115, 93, 50, 12, ES_AUTOHSCROLL
+    EDITTEXT        402,           185, 93, 50, 12, ES_AUTOHSCROLL
+
+    GROUPBOX        "",            2002, 5, 112, 235, 51
+    EDITTEXT        550,           10, 119, 46, 8, NOT WS_BORDER | ES_READONLY | NOT WS_TABSTOP
+    EDITTEXT        551,           70, 119, 46, 8, NOT WS_BORDER| ES_READONLY | NOT WS_TABSTOP
+    EDITTEXT        552,          130, 119, 45, 8, NOT WS_BORDER| ES_READONLY | NOT WS_TABSTOP
+    EDITTEXT        553,          190, 119, 45, 8, NOT WS_BORDER| ES_READONLY | NOT WS_TABSTOP
+    EDITTEXT        500,           10, 130, 45, 12, ES_AUTOHSCROLL | NOT WS_TABSTOP | ES_READONLY
+    EDITTEXT        501,           70, 130, 45, 12, ES_AUTOHSCROLL | NOT WS_TABSTOP | ES_READONLY
+    EDITTEXT        502,          130,130, 45, 12, ES_AUTOHSCROLL | NOT WS_TABSTOP | ES_READONLY
+    EDITTEXT        503,          190,130, 45, 12, ES_AUTOHSCROLL | NOT WS_TABSTOP | ES_READONLY
+    EDITTEXT        504,          10, 146, 200, 12, ES_AUTOHSCROLL | NOT WS_TABSTOP | ES_READONLY
+    PUSHBUTTON      "<", 510, 212, 147, 11, 10
+    PUSHBUTTON      ">", 511, 224, 147, 11, 10
+
+        
+    PUSHBUTTON      "&Quit", IDCANCEL, 5, 166, 40, 14
+    AUTOCHECKBOX    "&Pause", 5001,   55, 166, 40, 14, BS_PUSHLIKE
+    PUSHBUTTON      "&Update", 5002, 105, 166, 40, 14
+    PUSHBUTTON      "&Restore", 5003,155, 166, 40, 14 
+END
+
+
+10001 DIALOG 60, 18, 231, 85
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "WHOI Cable Error"
+FONT 8, "MS Sans Serif"
+BEGIN
+    PUSHBUTTON      "&Ok", IDOK, 94, 63, 40, 14
+    EDITTEXT        100, 16, 17, 201, 23, ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+    ICON            1000, -1, 4, 2, 18, 20
+END
+
+
+10002 DIALOG 39, 18, 374, 168
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "WHOI Cable Errors"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        100, 6, 6, 361, 128, ES_MULTILINE | WS_VSCROLL | ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
+    PUSHBUTTON      "&Ok", IDOK, 165, 142, 40, 14
+
+//    ICON            1000, -1, 4, 2, 18, 20
+END

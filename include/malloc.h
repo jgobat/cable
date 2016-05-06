@@ -1,0 +1,2 @@
+void free();
+// char *malloc();

@@ -1,0 +1,40 @@
+buoys
+    discus_3m
+        category=hulls
+        type=axisymmetric
+        mass=1145
+        diam=0
+        height=0
+        Cdt=1
+        Cdn=1
+        buoyancy=0
+        Cdw=1.5
+        Sw=6
+        diameters=(0.000, 0.020) (1.990, 0.020) (2.000, 0.910) (2.300, 2.600) (2.800, 3.000) (2.960, 3.000) 
+    discus_3m_copy
+        category=hulls
+        type=axisymmetric
+        mass=1145
+        diam=0
+        height=0
+        Cdt=1
+        Cdn=1
+        buoyancy=0
+        Cdw=1.5
+        Sw=6
+        diameters=(0.000, 0.020) (1.990, 0.020) (2.000, 0.910) (2.300, 2.600) (2.800, 3.000) (2.960, 3.000) 
+    hulls_copy
+        category=hulls
+    sphere_48in
+        category=balls
+        type=sphere
+        mass=400
+        diam=1.23
+        height=0
+        Cdt=0.6
+        Cdn=0.6
+        buoyancy=0
+        Cdw=0
+        Sw=0
+        comment="WHOI spheres have mass from 366 to 518 kg"
+end
