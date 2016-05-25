@@ -1866,6 +1866,14 @@ OpenCableFile(char *filename, int results_mode)
 
         solution -> rotation = 0;
 
+        solution -> progress_dt = 0;
+        solution -> restart_t = 0;
+        solution -> restart_file = NULL;
+        solution -> progress_file = NULL;
+
+        solution -> segment_dt = res -> seg_dt;
+        solution -> buoy_dt =  res -> buoy_dt;
+        solution -> ext_dt = res -> ext_dt;
         solution -> analysis = gui_analysis;
         solution -> problem = gui_problem;
         solution -> environment = gui_environment;
@@ -2223,6 +2231,8 @@ SolveModel(gpointer data, guint action, GtkWidget *w)
    solution -> dynstat_name = NULL;
    solution -> table_name = NULL;
    solution -> buoy_dt = 0.0;
+   solution -> segment_dt = 0.0;
+   solution -> ext_dt = 0.0;
    solution -> tmpdir = NULL;
    solution -> debug_input = 0;
    solution -> bill_of_materials = action;
@@ -2237,6 +2247,11 @@ SolveModel(gpointer data, guint action, GtkWidget *w)
    solution -> userQuit = 0;
    solution -> solutionComplete = 0;
    solution -> rotation = 0.0;
+
+   solution -> progress_dt = 0;
+   solution -> restart_t = 0;
+   solution -> progress_file = NULL;
+   solution -> restart_file = NULL;
 
    solution -> table = NULL;
    solution -> results = NULL;

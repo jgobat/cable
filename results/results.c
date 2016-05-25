@@ -106,6 +106,9 @@ ReadResultSnapshot(Result *res, int frame,
     double d[64];
     double force, length;
 
+    if (res -> snapTell == NULL || frame >= res -> nsteps || res -> snapTell[frame] == 0)
+        return 1;
+
     if (lbs)
       force = 4.4482216;
     else
@@ -123,7 +126,7 @@ ReadResultSnapshot(Result *res, int frame,
        cnt /= sizeof(double); /* gzread returns num bytes, not num items */
 # endif
         if (cnt != res -> numvars) {
-           error ("error reading snapshot data");
+           printf("error reading snapshot data, cnt=%d, nv=%d, np=%d\n", cnt, res -> numvars, res -> npoints);
  	       return 1; 
         }
         k = 0;
@@ -307,6 +310,10 @@ ProcessDynamic (Result *res, int num_nodes,
    if (res -> snap_dt > 0.0) {
       res -> nsteps = (int) ((duration + res -> snap_dt/2.0) / res -> snap_dt) + 1;
       res -> snapTell = (unsigned long *) malloc(sizeof(unsigned long) * res -> nsteps);
+
+      for (i = 0 ; i < res -> nsteps ; i++)
+          res -> snapTell[i] = 0;
+
       if (res -> snapTell == NULL) 
           Fatal("could not allocate tell points for snapshots");
    }

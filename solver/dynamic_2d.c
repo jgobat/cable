@@ -1867,6 +1867,7 @@ int SolveDynamicProblem2D (node, num_nodes, active, num_active, out,
    Segment   *seg;
    int        nseg;
    ResFile    prog;
+   long       prog_pos;
    double     xthrust, ythrust, zthrust;
 
    problem -> twoD = 1;
@@ -1954,6 +1955,44 @@ int SolveDynamicProblem2D (node, num_nodes, active, num_active, out,
       active[i] -> ydot = active[i] -> ydot_f = active[i] -> ydot_o = active[i] -> ydot_o_f = V;
    }
 
+   if (restart_name && restart_t) {
+       prog_pos = LoadProgressPoint(restart_name, problem, restart_t, NE);
+       if (prog_pos <= 0) {
+            error("could not load progress point from %s", prog_name);
+            return 1;
+        }
+        num_active = MakeNextPrevActive(problem, node, num_nodes, active);
+   }
+
+   if (prog_name && prog_dt) {
+      prog = res_open(prog_name, "wb");
+      if (prog == NULL) {
+         error("could not open progress file %s for writing", prog_name);
+         return 1;    
+      }
+   }
+   else
+      prog = NULL;
+
+
+   for (i = 1 ; i <= num_active ; i++) {
+        // evaluate this now that we have values filled in for any
+        // variables we might need to evaluate in the expressions so
+        // that the timestep t = start values are correct
+      if (active[i] -> next_active && active[i] -> next_active -> position == Connection && active[i] -> segment -> connector) {
+         ConnectorThrust(restart_t, active[i] -> segment, active[i], &xthrust, &ythrust, &zthrust); 
+         active[i] -> segment -> connector_xthrust.value = xthrust;
+         active[i] -> segment -> connector_ythrust.value = ythrust;
+         active[i] -> segment -> connector_zthrust.value = zthrust;
+      }
+      else if (active[i] -> position == BranchTerminal) {
+         Thrust(restart_t, active[i] -> segment -> branch -> terminal, &xthrust, &ythrust, &zthrust);
+         active[i] -> segment -> branch -> terminal -> xthrust.value = xthrust;
+         active[i] -> segment -> branch -> terminal -> ythrust.value = ythrust;
+         active[i] -> segment -> branch -> terminal -> zthrust.value = zthrust;
+      }
+   }
+
    Thrust(restart_t, problem -> terminal [1], &xthrust, &ythrust, &zthrust);
    problem -> terminal[1] -> xthrust.value = xthrust;
    problem -> terminal[1] -> ythrust.value = ythrust;
@@ -1972,8 +2011,8 @@ int SolveDynamicProblem2D (node, num_nodes, active, num_active, out,
    if (sample_dt == 0.0)
       sample_dt = dt;
 
-   WriteDynamicHeader (out, 0.0, analysis -> duration, dt, sample_dt, snap_dt, 
-                       seg_dt, buoy_dt, ext_dt,
+   WriteDynamicHeader (out, restart_t, analysis -> duration, dt, sample_dt, 
+                       snap_dt, seg_dt, buoy_dt, ext_dt,
                        num_output_nodes, output_nodes, decimate, node);
 
    if (prog && prog_dt)
@@ -2026,7 +2065,7 @@ int SolveDynamicProblem2D (node, num_nodes, active, num_active, out,
       UpdateLAMP(node, Y, num_active, 0.0, out, buoy_dt, 1);
 #endif
 
-   for (t = dt ; t <= analysis -> duration + dt/2.0 ; t += dt) {
+   for (t = restart_t + dt ; t <= analysis -> duration + dt/2.0 ; t += dt) {
  
 #if (defined HAVELAMP && !defined API)
       if (environment -> forcing == LAMP && !problem -> dynstat) 

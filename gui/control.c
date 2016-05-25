@@ -1112,7 +1112,9 @@ ExportResultMovie(DisplayObject obj)
     x = ChartX(obj);
     y = ChartY(obj);
     for (j = 0 ; j < res -> nsteps && !obj -> destroy ; j++) {
-        ReadResultSnapshot(res, j, 1, 1, 0);
+        if (ReadResultSnapshot(res, j, 1, 1, 0))
+            break;
+
         // printf("updating plot\n"); fflush(stdout);
         UpdateSpatialAnimation(obj, res, var, j*res -> snap_dt);
 
@@ -1160,7 +1162,8 @@ ControlUpdatePlayback(gpointer data)
     snprintf(buff, 32, "%g", t);
     gtk_label_set_text(GTK_LABEL(p -> display), buff);
 
-    ReadResultSnapshot(res, p -> frameN, 1, 1, 0);
+    if (ReadResultSnapshot(res, p -> frameN, 1, 1, 0))
+        return TRUE;
 
     for (i = 1 ; i < MAXOUTPUT ; i++) {
         if (s -> snapPlot[i] 
@@ -1291,9 +1294,9 @@ playPlayback(GtkWidget *widget, gpointer data)
 {
     Solution *s = (Solution *) data;
     Playback *p = (Playback *) s -> playback;
+    Result *r = (Result *) s -> results;
 
     if (gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(widget))) {
-        printf("starting playback\n");
         p -> timer = g_timeout_add(p -> interval, ControlUpdatePlayback, s);
     }
     else {
@@ -1386,6 +1389,7 @@ BuildPlayback(Solution *s)
 
     toolbar_insert_stock(toolbar, GTK_STOCK_CLOSE,
                          GTK_SIGNAL_FUNC(closePlayback), s, 0, NULL);
+
     if (results -> dynamic) {
         toolbar_insert_stock(toolbar, GTK_STOCK_MEDIA_REWIND,
                          GTK_SIGNAL_FUNC(speedDecr), s, 0, NULL);

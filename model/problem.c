@@ -594,6 +594,8 @@ ReadModelFile (char *filename, Problem *p, Analysis *a, Environment *e, int pars
     a -> viva_iterations = 0;
 
     a -> dynamic_var_smooth.value = 1;
+    a -> dynamic_var_smooth.text = NULL;
+    a -> dynamic_var_smooth.expr = NULL;
 
     /* Initialize the environment structure. */
 

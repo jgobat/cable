@@ -622,6 +622,8 @@ SolveDE (difeq, update, itmax, conv, base_relax, scalv,
 
          if (viva_passes >= analysis -> viva_iterations)
              return 0;
+#else
+        return 0;
 #endif
       }
       
