@@ -256,7 +256,7 @@ DynamicUpdate2D (
 
    a = active[1];
 
-   if (problem -> type == Deployment || 
+   if (problem -> type == Deployment ||
        problem -> type == Towing ||
        problem -> type == HorizontalDrifter ||
        problem -> type == Drifter ||
@@ -2146,7 +2146,7 @@ int SolveDynamicProblem2D (node, num_nodes, active, num_active, out,
                     active[1] -> y, active[1] -> y_o);
 #endif
 
-      sprintf (buffer, "t = %g,", t);
+      sprintf (buffer, "t=%g,%g,%g,", t, active[1] -> x, active[num_active] -> x);
       displ_msg = 0;
       if (num_output_nodes &&  check(t, dt, sample_dt) <= analysis -> dt/2000) {
          WriteDynamicResult (out, output_map, output_nodes, 

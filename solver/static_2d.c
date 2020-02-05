@@ -1098,23 +1098,30 @@ int SolveStaticProblem2D (init_loaded, node, num_nodes, active, num_active, out,
                              environment -> surface - active [num_active] -> x));
       T = Tension(active[1] -> Y[1], active [1] -> material);
       phi = active[1] -> Y [3];
-      DisplayMessage(" Anchor Fx=%.1f, Fz=%.1f, Wmin(mu=%g, SF=%g)=%.0f lbs",
+      DisplayMessage(" Anchor Fx=%.1f, Fz=%.1f, Wmin(mu=%g, SF=%g)=%.0f lbs (%.0f lbs steel in air)",
                      T*sin(phi) + active[1] -> Y[2]*cos(phi),
                      T*cos(phi) - active[1] -> Y[2]*sin(phi),
                      problem -> terminal[1]->friction, problem -> terminal[1]->safety,
                      ((T*sin(phi) + active[1] -> Y[2]*cos(phi))*problem -> terminal[1]->safety/problem -> terminal[1]->friction + 
-                     T*cos(phi) - active[1] -> Y[2]*sin(phi))/4.4482216);
+                     T*cos(phi) - active[1] -> Y[2]*sin(phi))/4.4482216,
+                     ((T*sin(phi) + active[1] -> Y[2]*cos(phi))*problem -> terminal[1]->safety/problem -> terminal[1]->friction + 
+                     T*cos(phi) - active[1] -> Y[2]*sin(phi))/4.4482216/0.87);
    }
    else if (problem -> type == Subsurface) {
       T = Tension(active[1] -> Y[1], active [1] -> material);
       phi = active[1] -> Y [3];
-      DisplayMessage("Buoy depth=%.1f, Anchor Fx=%.1f, Fz=%.1f, Wmin(mu=%g, SF=%g)=%.0f lbs",
+      DisplayMessage("Buoy depth=%.1f, Anchor Fx=%.1f, Fz=%.1f, Wmin(mu=%g, SF=%g)=%.0f lbs (%.0f lbs steel in air)",
                      environment -> depth - active[num_active] -> x,
                      T*sin(phi) + active[1] -> Y[2]*cos(phi),
                      T*cos(phi) - active[1] -> Y[2]*sin(phi),
                      problem -> terminal[1]->friction, problem -> terminal[1]->safety,
                      ((T*sin(phi) + active[1] -> Y[2]*cos(phi))*problem -> terminal[1]->safety/problem -> terminal[1]->friction + 
-                     T*cos(phi) - active[1] -> Y[2]*sin(phi))/4.4482216);
+                     T*cos(phi) - active[1] -> Y[2]*sin(phi))/4.4482216,
+                     ((T*sin(phi) + active[1] -> Y[2]*cos(phi))*problem -> terminal[1]->safety/problem -> terminal[1]->friction + 
+                     T*cos(phi) - active[1] -> Y[2]*sin(phi))/4.4482216/0.87);
+      for (i = 0 ; i < problem -> solution -> num_output_nodes ; i++) {
+         DisplayMessage("node %d depth=%.1f", problem -> solution -> output_nodes[i], environment -> depth - active[problem -> solution -> output_nodes[i]] -> x);
+      }
    }
    else if (problem -> type == Drifter) {
       T = Tension(active[num_active] -> Y[1], active [num_active] -> material);

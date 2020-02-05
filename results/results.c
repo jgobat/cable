@@ -1002,9 +1002,9 @@ SumStaticDynamic(Result *res, int dir)
       for (i = 0 ; i < res -> npoints ; i++) {
          
             if (res -> output_map [DISPLACEMENT]) {
-               res -> x [i] += dir*res -> x_st [i]; 
-               res -> y [i] += dir*res -> y_st [i]; 
-               res -> z [i] += dir*res -> z_st [i]; 
+              res -> x [i] += dir*res -> x_st [i]; 
+              res -> y [i] += dir*res -> y_st [i]; 
+              res -> z [i] += dir*res -> z_st [i]; 
             }
 
             for (k = 0 ; k < 3 ; k++) {
