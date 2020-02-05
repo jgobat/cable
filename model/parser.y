@@ -181,7 +181,7 @@ static unsigned		  table_size = 0;	/* size of table	   */
 %token  BUOYANCY_HEAD_EQ
 
 %token	CONNECTOR_EQ BODY_EQ SEGMENT_EQ ANCHOR_EQ NODE_EQ TERMINAL_EQ BRANCH_EQ 
-%token	MATERIAL_EQ LENGTH_EQ NODES_EQ ATTACHMENTS_EQ
+%token	MATERIAL_EQ LENGTH_EQ NODES_EQ ATTACHMENTS_EQ NAME_EQ
 %token  TOP_PAY_EQ BOTTOM_PAY_EQ TOP_LENGTH_EQ BOTTOM_LENGTH_EQ
 %token  TOP_NODES_EQ BOTTOM_NODES_EQ
 %token  BUOY_EQ
@@ -1178,6 +1178,12 @@ segment_parameter
 	| MATERIAL_EQ NAME
 	    {
 		segment -> material = (Material) $2;
+	    }
+
+	| NAME_EQ NAME
+	    {
+        Deallocate(segment -> name);
+		segment -> name = $2;
 	    }
 
 	| NODES_EQ distribution_pair_list

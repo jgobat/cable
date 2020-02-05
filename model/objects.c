@@ -99,6 +99,7 @@ Segment CreateSegment (number)
 	    Fatal ("unable to allocate memory for new segment");
 
     segment -> aux = NULL;
+    segment -> name = NULL;
     segment -> number = number;
     segment -> num_nodes = 0;
 
@@ -182,6 +183,7 @@ void DestroySegment (segment)
 {
     if (segment) {
 	    Deallocate (segment -> aux);
+	    Deallocate (segment -> name);
 	    Deallocate (segment);
     }
 }

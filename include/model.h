@@ -339,6 +339,7 @@ typedef enum {
 
 typedef struct segment {
     char 	   *aux;
+    char       *name;
     unsigned	    number;	/* segment number		   */
     struct segment *next;
     struct segment *prev;

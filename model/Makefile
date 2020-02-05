@@ -31,7 +31,7 @@ else ifeq ($(OS),OSX-universal)
 else ifeq ($(OS),OSX)
     CFLAGS = -g -O2 -Wall -I../include -DZLIB -DGUI -mmacosx-version-min=10.4
 else
-    CFLAGS = -g -Wall -I../include -DZLIB
+    CFLAGS = -g -Wall -I../include -DZLIB -DGUI
 endif
 
 AR	 = ar cq

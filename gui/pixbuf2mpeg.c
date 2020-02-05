@@ -122,7 +122,7 @@ InitializeMovie(ChartMovie *m, char *filename, int width, int height)
     avcodec_register_all(); // register all codecs
 
     /* find the mpeg1 video encoder */
-    m -> codec = avcodec_find_encoder(CODEC_ID_MPEG1VIDEO);
+    m -> codec = avcodec_find_encoder(AV_CODEC_ID_MPEG1VIDEO);
     if (!m -> codec) {
         fprintf(stderr, "codec not found\n");
         return 1;
@@ -142,7 +142,7 @@ InitializeMovie(ChartMovie *m, char *filename, int width, int height)
     m -> ctxt -> time_base= (AVRational){1,24}; // frames per second
     m -> ctxt -> gop_size = 10; // emit one intra frame every ten frames 
     m -> ctxt -> max_b_frames=1;
-    m -> ctxt -> pix_fmt = PIX_FMT_YUV420P;
+    m -> ctxt -> pix_fmt = AV_PIX_FMT_YUV420P;
 
     /* open it */
     if (avcodec_open2(m -> ctxt, m -> codec, NULL) < 0) {

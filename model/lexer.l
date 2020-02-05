@@ -286,6 +286,7 @@ body{eq}            {return BODY_EQ;}
 segment{eq}			{return SEGMENT_EQ;}
 nodes{eq}			{return NODES_EQ;}
 material{eq}			{return MATERIAL_EQ;}
+name{eq}            {return NAME_EQ;}
 length{eq}			{return LENGTH_EQ;}
 top-spool-pay{eq}		{return TOP_PAY_EQ;}
 bottom-spool-pay{eq}		{return BOTTOM_PAY_EQ;}

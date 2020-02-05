@@ -29,7 +29,7 @@ else ifeq ($(OS),OSX-universal)
              -force_cpusubtype_ALL -mmacosx-version-min=10.4 \
              -arch i386 -arch ppc
 else
-    CFLAGS = -g -DZLIB -DGUI -Wall -I../include
+    CFLAGS = -g -DZLIB -DGUI -Wall -I../include -DGUI
 endif
 
 AR	 = ar cq

@@ -57,7 +57,7 @@ double Buoyancy (b, draft, e)
    if (draft < 0.0) 
       return 0.0;
 
-   if (draft > b -> max_draft)
+   if (draft >= b -> max_draft)
       return b -> buoyancy;
 
    switch (b -> type) {

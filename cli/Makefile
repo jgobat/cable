@@ -69,12 +69,14 @@ else ifeq ($(OS),nox)
    LDFLAGS  = -g -static 
    ZLIBS    = -lz -lm
 else
-   CFLAGS = -g -DGUI -Wall -funroll-loops -I../include \
+   CFLAGS = -g -Wall -funroll-loops -I../include -DGUI \
             -DZLIB -I../widgets -I/usr/X11R6/include 
    WOBJS   = Xcontrol.o 
    LDFLAGS  = -g  
    WIDGETS  = ../widgets/libwidgets.a
+   # WIDGETS  = 
    XLIBS    = -L/usr/X11R6/lib -lXaw -lXmu -lXt -lX11 
+   # XLIBS    = 
    ZLIBS    = -lz -lm
 #   LAMP	    = ../LAMP/lamp_whoi.a -lg2c
 endif

@@ -1081,13 +1081,13 @@ int SolveStaticProblem2D (init_loaded, node, num_nodes, active, num_active, out,
       b -> draft = Draft(b -> w + T*cos(phi) - active[num_active] -> Y[2]*sin(phi), b, environment);
       Current(0.0, environment -> depth, 0, 0, &uack, &vack, NULL);
       drag = 0.5*environment -> rho*ProjectedArea(b, b -> draft)*b -> Cdn*(vack - problem -> terminal[2] -> yspeed.value)*fabs(vack - problem -> terminal[2] -> yspeed.value);
-      DisplayMessage("Done. Tow T= %.1f, Tow H= %.1f, Ship T= %.1f, Ship Fz= %.2f, Ship Fx= %.2f, Ship drag= %.2f, Tow X=%.1f, Ship X=%.1f",
+      DisplayMessage("Done. Tow T= %.1f, Tow H= %.1f, Ship T= %.1f, Ship Fz= %.2f, Ship Fx= %.2f, Ship drag= %.2f, Tow X=%.1f, Ship X=%.1f, Wire angle=%.1f",
                Tension(active[1] -> Y[1], active [1] -> material),
                (environment -> depth ? environment -> depth - active [1] -> x :
                 active [num_active] -> x),
                T, T*cos(phi) - active[num_active] -> Y[2]*sin(phi),
                T*sin(phi) + active[num_active] -> Y[2]*cos(phi), drag,
-               active[1] -> y, active[num_active] -> y);
+               active[1] -> y, active[num_active] -> y, phi*180/M_PI);
 
       printf("%g %g\n", environment -> depth ? environment -> depth - active [1] -> x : active[num_active] -> x, active[num_active] -> y);
    }
@@ -1121,6 +1121,13 @@ int SolveStaticProblem2D (init_loaded, node, num_nodes, active, num_active, out,
                      T*cos(phi) - active[1] -> Y[2]*sin(phi))/4.4482216/0.87);
       for (i = 0 ; i < problem -> solution -> num_output_nodes ; i++) {
          DisplayMessage("node %d depth=%.1f", problem -> solution -> output_nodes[i], environment -> depth - active[problem -> solution -> output_nodes[i]] -> x);
+      }
+
+      for (i = 1 ; i <= nseg ; i++) {
+         if (seg[i]->name) {
+            DisplayMessage("%20s last node depth %.1f",
+                           seg[i]->name, environment -> depth - seg[i]->last->x);
+         }
       }
    }
    else if (problem -> type == Drifter) {

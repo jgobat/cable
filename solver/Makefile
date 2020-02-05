@@ -36,7 +36,7 @@ else ifeq ($(OS),OSX)
 else ifeq ($(OS),nox)
     CFLAGS = -g -Wall -funroll-loops -I../include -DZLIB
 else
-    CFLAGS = -DGUI -g -Wall -funroll-loops -I../include -DZLIB
+    CFLAGS = -g -Wall -funroll-loops -I../include -DZLIB -DGUI
 endif
 
 OBJS	= driver.o solve.o nspiv.o catenary.o auto.o simple.o lamp.o \
