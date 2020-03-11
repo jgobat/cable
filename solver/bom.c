@@ -139,11 +139,12 @@ AddMaterial(Item item, void *call_data)
 {
     FILE     *out_fp = (FILE *) call_data;
     Material mat = (Material) item;
-    int      i;
+    int      i, count;
     double   length, mass, wet;
     int      header;
 
     header = 0;
+    count = 0;
     length = mass = wet = 0;
     for (i = 1 ; i <= nseg ; i++) {
         if (seg[i] -> material == mat) {
@@ -154,14 +155,15 @@ AddMaterial(Item item, void *call_data)
             else {
                 fprintf(out_fp, ", %.1f", seg[i] -> length);
             }
-
+            count ++;
             wet    += seg[i] -> length * mat -> wet;
             mass   += seg[i] -> length * mat -> m;
             length += seg[i] -> length;
         }
     }
     if (header) {
-        fprintf(out_fp, "\n   totals: length     %.1f\n", length);
+        fprintf(out_fp, "\n   totals: pieces     %d\n", count); 
+        fprintf(out_fp, "           length     %.1f\n", length);
         fprintf(out_fp, "           air mass   %.1f\n", mass);
         fprintf(out_fp, "           wet weight %.1f lbs\n", wet/4.4482216);
     }
@@ -273,9 +275,9 @@ MaterialsBill(FILE *fp, Problem *p, Environment *e)
     TreeSetAndIterate(p -> material_tree, AddMaterial, fp);
     TreeSetAndIterate(p -> connector_tree, AddConnector, fp);
 
-    if (p -> type == Subsurface || p -> type == Surface) {
-        SummarizeWeights(fp, p, seg, nseg, NULL, NULL, NULL);
-    }
+   // if (p -> type == Subsurface || p -> type == Surface) {
+   //     SummarizeWeights(fp, p, seg, nseg, NULL, NULL, NULL);
+   // }
 
     return 0;
 }
